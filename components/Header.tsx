@@ -94,7 +94,7 @@ export function Header() {
         <span className="whitespace-nowrap font-display text-[20px] font-bold [direction:rtl] en:text-[16px] en:leading-[1.1] en:[direction:ltr] max-[361px]:en:text-[15px]">
           {t.name}
         </span>
-        <Image src="/assets/compact-profile.png" alt="" width={39} height={39} loading="eager" className="size-[39px] object-contain" />
+        <Image src="/assets/portrait-static.png" alt="" width={39} height={39} loading="eager" className="size-[39px] object-contain" />
       </div>
     </header>
   );

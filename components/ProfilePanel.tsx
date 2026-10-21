@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { usePortfolio } from "./PortfolioProvider";
-import { links } from "@/lib/content";
+import { experience, links, projects } from "@/lib/content";
 
 /** The pill that "hangs" from the header: card on desktop/tablet, black capsule on phones. */
 function Availability() {
@@ -25,7 +25,10 @@ function Availability() {
         "desk:left-auto desk:right-1/2 desk:top-[-64px] desk:translate-x-1/2 en:desk:left-auto",
       ].join(" ")}
     >
-      <span className="size-[6px] rounded-full bg-[#c5fc2e] shadow-[0_0_10px_4px_#c5fc2e7a] tab:size-[7px] wide:shadow-[0_0_7px_3px_#c5fc2e7a]" aria-hidden />
+      <span
+        className="size-[6px] rounded-full bg-[#c5fc2e] shadow-[0_0_10px_4px_#c5fc2e7a] tab:size-[7px] wide:shadow-[0_0_7px_3px_#c5fc2e7a]"
+        aria-hidden
+      />
       <span>{t.available}</span>
     </div>
   );
@@ -61,7 +64,12 @@ function PortraitBox() {
 }
 
 function Mark({ className }: { className: string }) {
-  return <span aria-hidden className={`pointer-events-none absolute z-2 text-[#c5c8cf] border-current ${className}`} />;
+  return (
+    <span
+      aria-hidden
+      className={`pointer-events-none absolute z-2 text-[#c5c8cf] border-current ${className}`}
+    />
+  );
 }
 
 function ContactArea() {
@@ -76,15 +84,26 @@ function ContactArea() {
         work ? "col-start-1 row-start-4" : "col-start-1 row-start-2",
         // tablet: two cells side by side below the portfolio
         "tab:mx-6 tab:mb-7 tab:mt-10 tab:grid tab:grid-cols-2 tab:self-start",
-        work ? "tab:col-span-full tab:row-start-3" : "tab:col-span-1 tab:row-start-2",
+        work
+          ? "tab:col-span-full tab:row-start-3"
+          : "tab:col-span-1 tab:row-start-2",
         // desktop: pinned to the bottom of the profile column
         "desk:col-auto desk:row-auto desk:self-stretch desk:m-0 desk:mt-auto desk:block desk:pt-[25px] desk:[direction:inherit] wide:pt-0",
       ].join(" ")}
     >
       {/* tablet footer rule + junctions */}
-      <span aria-hidden className="pointer-events-none absolute -left-[49px] -right-[49px] top-[-40.5px] hidden h-px bg-line tab:max-desk:block" />
-      <span aria-hidden className="plus-mark pointer-events-none absolute -left-6 top-[-40px] z-8 hidden -translate-x-1/2 -translate-y-1/2 tab:max-desk:block" />
-      <span aria-hidden className="plus-mark pointer-events-none absolute -right-6 top-[-40px] z-8 hidden translate-x-1/2 -translate-y-1/2 tab:max-desk:block" />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -left-[49px] -right-[49px] top-[-40.5px] hidden h-px bg-line tab:max-desk:block"
+      />
+      <span
+        aria-hidden
+        className="plus-mark pointer-events-none absolute -left-6 top-[-40px] z-8 hidden -translate-x-1/2 -translate-y-1/2 tab:max-desk:block"
+      />
+      <span
+        aria-hidden
+        className="plus-mark pointer-events-none absolute -right-6 top-[-40px] z-8 hidden translate-x-1/2 -translate-y-1/2 tab:max-desk:block"
+      />
 
       <Mark className="left-[-2px] top-[-2px] size-[15px] border-l-2 border-t-2 tab:size-[11px] desk:size-[15px]" />
       <Mark className="right-[-2px] top-[-2px] size-[15px] border-r-2 border-t-2 tab:size-[11px] desk:size-[15px]" />
@@ -100,7 +119,13 @@ function ContactArea() {
           "desk:min-h-[54px] desk:border-r-0 desk:border-b desk:text-[18px] wide:min-h-[41px] wide:text-[clamp(12px,.92vw,15px)]",
         ].join(" ")}
       >
-        <img src="/assets/icons/mail-01.svg" alt="" width={18} height={18} className="opacity-70" />
+        <img
+          src="/assets/icons/mail-01.svg"
+          alt=""
+          width={18}
+          height={18}
+          className="opacity-70"
+        />
         <span>{links.email}</span>
       </a>
 
@@ -108,8 +133,14 @@ function ContactArea() {
         aria-label={t.socialsAria}
         className="relative grid h-[42px] grid-cols-5 [direction:ltr] tab:h-[52px] desk:h-[57px] wide:h-[43px]"
       >
-        <span aria-hidden className="t-down-mark pointer-events-none absolute left-0 top-0 z-2 hidden -translate-x-1/2 -translate-y-1/2 [--mark:#c5c8cf] tab:max-desk:block" />
-        <span aria-hidden className="t-up-mark pointer-events-none absolute bottom-0 left-0 z-2 hidden -translate-x-1/2 translate-y-1/2 [--mark:#c5c8cf] tab:max-desk:block" />
+        <span
+          aria-hidden
+          className="t-down-mark pointer-events-none absolute left-0 top-0 z-2 hidden -translate-x-1/2 -translate-y-1/2 [--mark:#c5c8cf] tab:max-desk:block"
+        />
+        <span
+          aria-hidden
+          className="t-up-mark pointer-events-none absolute bottom-0 left-0 z-2 hidden -translate-x-1/2 translate-y-1/2 [--mark:#c5c8cf] tab:max-desk:block"
+        />
         {links.socials.map((social) => (
           <a
             key={social.name}
@@ -119,7 +150,11 @@ function ContactArea() {
             aria-label={social.name}
             className="grid place-items-center border-r border-r-line last:border-r-0 hover:bg-[#e5e7ee]"
           >
-            <img src={social.icon} alt="" className="size-[18px] opacity-[.74] tab:size-[22px] desk:size-[18px]" />
+            <img
+              src={social.icon}
+              alt=""
+              className="size-[18px] opacity-[.74] tab:size-[22px] desk:size-[18px]"
+            />
           </a>
         ))}
       </div>
@@ -150,8 +185,14 @@ export function ProfilePanel() {
           ].join(" ")}
         >
           {/* tablet corner marks */}
-          <span aria-hidden className="t-up-mark pointer-events-none absolute bottom-0 left-0 z-8 hidden -translate-x-1/2 translate-y-1/2 tab:max-desk:block" />
-          <span aria-hidden className="plus-mark pointer-events-none absolute bottom-0 right-0 z-8 hidden translate-x-1/2 translate-y-1/2 tab:max-desk:block" />
+          <span
+            aria-hidden
+            className="t-up-mark pointer-events-none absolute bottom-0 left-0 z-8 hidden -translate-x-1/2 translate-y-1/2 tab:max-desk:block"
+          />
+          <span
+            aria-hidden
+            className="plus-mark pointer-events-none absolute bottom-0 right-0 z-8 hidden translate-x-1/2 translate-y-1/2 tab:max-desk:block"
+          />
 
           <div>
             <h1 className="m-0 font-display text-[26px] font-bold leading-[1.3] tab:text-[27px] desk:text-[clamp(25px,2vw,36px)] wide:text-[clamp(22px,1.65vw,27px)]">
@@ -172,8 +213,16 @@ export function ProfilePanel() {
           >
             {[
               { value: t.stats.yearsValue, label: t.stats.years, order: "" },
-              { value: "+60", label: t.stats.projects, order: "en:order-3" },
-              { value: "+16", label: t.stats.sectors, order: "en:order-2" },
+              {
+                value: `+${projects.length}`,
+                label: t.stats.projects,
+                order: "en:order-3",
+              },
+              {
+                value: `+${experience.length}`,
+                label: t.stats.sectors,
+                order: "en:order-2",
+              },
             ].map((stat) => (
               <div
                 key={stat.label}
@@ -182,7 +231,9 @@ export function ProfilePanel() {
                 <strong className="font-stat text-[25px] font-bold leading-[1.1] text-[#b6b8bf] tab:text-[26px] desk:text-[clamp(25px,1.8vw,30px)]">
                   {stat.value}
                 </strong>
-                <span className="text-[12px] desk:text-[clamp(12px,.9vw,15px)]">{stat.label}</span>
+                <span className="text-[12px] desk:text-[clamp(12px,.9vw,15px)]">
+                  {stat.label}
+                </span>
               </div>
             ))}
           </div>
@@ -201,7 +252,14 @@ export function ProfilePanel() {
               className={`${actionBase} border-[#d1d1d6] bg-[linear-gradient(#fff,#f5f5f8)] text-[#222] shadow-[0_2px_1px_#0002]`}
             >
               {t.cv}
-              <img src="/assets/icons/download-02.svg" width={16} height={16} alt="" aria-hidden className="max-w-none" />
+              <img
+                src="/assets/icons/download-02.svg"
+                width={16}
+                height={16}
+                alt=""
+                aria-hidden
+                className="max-w-none"
+              />
             </a>
           </div>
         </div>

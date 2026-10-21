@@ -43,18 +43,18 @@ export const metadata: Metadata = {
   icons: { icon: "/assets/portrait-static.png", apple: "/assets/portrait-static.png" },
   openGraph: {
     type: "website",
-    siteName: "Mabroukui",
+    siteName: "MabroukFront",
     locale: "ar_EG",
     title: SOCIAL_TITLE,
     description: DESCRIPTION,
     url: SITE_URL + "/",
     images: [
       {
-        url: "/assets/share-cover.jpg",
+        url: "/assets/portrait-static.png",
         type: "image/jpeg",
         width: 1200,
         height: 630,
-        alt: "كافر معرض أعمال أحمد مبروك",
+        alt: "كافر معرض أعمال عبدالرحمن مبروك",
       },
     ],
   },
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SOCIAL_TITLE,
     description: DESCRIPTION,
-    images: ["/assets/share-cover.jpg"],
+    images: ["/assets/portrait-static.png"],
   },
 };
 

@@ -185,11 +185,25 @@ export const links = {
   email: "abdomabroukdev@gmail.com",
   socials: [
     // { name: "Behance", href: "https://www.behance.net/a7medmabrok0", icon: "/assets/icons/behance.svg" },
-    // { name: "Dribbble", href: "https://dribbble.com/a7medmabrok0", icon: "/assets/icons/dribbble.svg" },
     {
       name: "LinkedIn",
       href: "www.linkedin.com/in/abdelrhman-mabrouk-777b96343",
       icon: "/assets/icons/linkedin.svg",
+    },
+    {
+      name: "github",
+      href: "https://github.com/Abdo-Mabrouk",
+      icon: "/assets/icons/github.svg",
+    },
+    {
+      name: "vercel",
+      href: "https://vercel.com/abdelrhman-mabrouks-projects",
+      icon: "/assets/icons/vercel.svg",
+    },
+    {
+      name: "facebook",
+      href: "https://facebook.com/abd.el.rhman.mabrouk.560055",
+      icon: "/assets/icons/facebook.svg",
     },
     // { name: "X", href: "https://x.com/a7medmabrok0", icon: "/assets/icons/x.svg" },
     {
