@@ -30,7 +30,7 @@ const googleSans = localFont({
   preload: false,
 });
 
-const SITE_URL = "https://mabroukui.com";
+const SITE_URL = "https://mabroukfrontend.mabroukui.com/";
 const DESCRIPTION ="متخصص في تطوير واجهات الويب الحديثة والتطبيقات الرقمية باستخدام React.js وNext.js. أركز على بناء واجهات تفاعلية وسريعة وقابلة للتوسع، وتطوير تجارب مستخدم متكاملة، وربط الواجهات بالـ APIs، مع الاهتمام بتنظيم الكود، وتحسين الأداء، وتحقيق التوازن بين احتياجات المستخدم ومتطلبات المشروع."
 const SOCIAL_TITLE = "عبدالرحمن مبروك - مصمم واجهة اماميه";
 
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   applicationName: "MabroukFront_End",
   alternates: { canonical: "/" },
-  icons: { icon: "/assets/site-icon.png", apple: "/assets/site-icon.png" },
+  icons: { icon: "/assets/portrait-static.png", apple: "/assets/portrait-static.png" },
   openGraph: {
     type: "website",
     siteName: "Mabroukui",

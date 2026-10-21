@@ -119,10 +119,12 @@ export const skills = [
 
 export const software = [
   { name: "Figma", icon: "/assets/icons/software/figma.svg" },
-  { name: "Photoshop", icon: "/assets/icons/software/photoshop.svg" },
-  { name: "Illustrator", icon: "/assets/icons/software/illustrator.svg" },
-  { name: "Notion", icon: "/assets/icons/software/notion.svg" },
-  { name: "Miro", icon: "/assets/icons/software/miro.svg" },
+  { name: "VSCode", icon: "/assets/icons/software/Vs Code.jpeg" },
+  { name: "Cursor", icon: "/assets/icons/software/CursorLogo.jpeg" },
+  { name: "Postmn", icon: "/assets/icons/software/PostManLogo.jpeg" },
+  { name: "Get", icon: "/assets/icons/software/GetLogo.jpeg" },
+  { name: "CloudeCode", icon: "/assets/icons/software/CloudeCode.jpeg" },
+  { name: "Vercal", icon: "/assets/icons/software/VercalLogo.jpeg" },
 ] as const;
 
 export const aboutSections: AboutSection[] = [
