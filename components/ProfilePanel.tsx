@@ -240,12 +240,12 @@ export function ProfilePanel() {
               <div
                 key={stat.label}
                 data-intro="stat"
-                className={`flex flex-col items-center gap-px whitespace-nowrap text-center tab:items-start tab:text-right en:tab:text-left ${stat.order}`}
+                className={`flex min-w-0 flex-col items-center gap-px whitespace-nowrap text-center tab:items-start tab:text-right en:tab:text-left ${stat.order}`}
               >
                 <strong data-count className="font-stat text-[25px] font-bold leading-[1.1] text-[#b6b8bf] dark:text-[#6b707b] tab:text-[26px] desk:text-[clamp(25px,1.8vw,30px)]">
                   {stat.value}
                 </strong>
-                <span className="text-[12px] desk:text-[clamp(12px,.9vw,15px)]">
+                <span className="whitespace-normal text-[12px] leading-tight desk:text-[clamp(12px,.9vw,15px)]">
                   {stat.label}
                 </span>
               </div>

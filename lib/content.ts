@@ -288,7 +288,7 @@ export const ui: Localized<UiStrings> = {
     role: "Front-End Developer",
     lede: "Front-End Developer specializing in React.js and Next.js. I build fast, responsive, and scalable web interfaces, connect them to APIs, and care deeply about performance, code quality, and user experience.",
     stats: {
-      years: "Years Experience",
+      years: "Experience",
       yearsValue: "+1.5y",
       projects: "Projects",
       sectors: "Sector",
