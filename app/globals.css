@@ -8,12 +8,17 @@
   --breakpoint-desk: 1024px; /* desktop starts */
   --breakpoint-wide: 1100px; /* wide desktop tuning */
 
-  --color-line: #d4d7df;
-  --color-ink: #171717;
-  --color-surface: #f5f6fa;
-  --color-panel: #f0f1f5;
-  --color-dot: #dfe2eb;
-  --color-muted: #aaaeb7;
+  /* Theme-aware colours: values live in :root / html.dark below. */
+  --color-line: var(--c-line);
+  --color-ink: var(--c-ink);
+  --color-surface: var(--c-surface);
+  --color-panel: var(--c-panel);
+  --color-dot: var(--c-dot);
+  --color-muted: var(--c-muted);
+  --color-card: var(--c-card);
+  --color-soft: var(--c-soft);
+  --color-subtle: var(--c-subtle);
+  --color-hover: var(--c-hover);
   --color-accent: #d6ff35;
 
   --font-ping: var(--font-ping-src), Arial, sans-serif;
@@ -27,14 +32,67 @@
 
 /* Custom variants */
 @custom-variant en (:where(html.english) &);
+@custom-variant dark (&:where(html.dark, html.dark *));
 
 :root {
   --side-space: clamp(0px, calc(32.75vw - 335.36px), 240px);
   --header-h: 52px;
   --display-stack: var(--font-thmanyah-src), var(--font-ping-src), serif;
   --dots: radial-gradient(circle at 16px 16px, var(--color-dot) 1.2px, transparent 1.6px) 0 0 / 32px 32px;
-  color: #181818;
+
+  /* Light theme */
+  --c-line: #d4d7df;
+  --c-ink: #171717;
+  --c-surface: #f5f6fa;
+  --c-panel: #f0f1f5;
+  --c-dot: #dfe2eb;
+  --c-muted: #aaaeb7;
+  --c-card: #ffffff;
+  --c-soft: #4f5560;
+  --c-subtle: #737984;
+  --c-hover: #e9eaf0;
+  --c-mark: #464a50;
+  --c-info: #f6f7fa;
+  --c-text: #181818;
+
+  color: var(--c-text);
+  color-scheme: light;
   font-synthesis: none;
+}
+
+/* Dark theme: cool near-black greys so the lime accent stays the hero colour. */
+html.dark {
+  --c-line: #2a2d34;
+  --c-ink: #ececef;
+  --c-surface: #0f1013;
+  --c-panel: #15171b;
+  --c-dot: #23262d;
+  --c-muted: #5d626c;
+  --c-card: #1a1c21;
+  --c-soft: #a3a8b3;
+  --c-subtle: #8b909b;
+  --c-hover: #1f2228;
+  --c-mark: #6b707b;
+  --c-info: #111215;
+  --c-text: #ececef;
+  color-scheme: dark;
+}
+
+/* Brief cross-fade when the theme is toggled without View Transitions support. */
+html.theme-switching,
+html.theme-switching * {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    fill 0.35s ease !important;
+}
+
+/* Circular reveal from the toggle button (View Transitions API). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 html.english {
   --display-stack: var(--font-thmanyah-src), var(--font-google-src), serif;
@@ -45,12 +103,12 @@ html.english {
   background: var(--dots), var(--color-surface);
 }
 @utility bg-dots-info {
-  background: var(--dots), #f6f7fa;
+  background: var(--dots), var(--c-info);
 }
 
 /* "+" / "T" registration marks drawn with two gradients. Colour comes from --mark. */
 @utility plus-mark {
-  --_c: var(--mark, #464a50);
+  --_c: var(--mark, var(--c-mark));
   width: 22px;
   height: 22px;
   background:
@@ -58,7 +116,7 @@ html.english {
     linear-gradient(var(--_c), var(--_c)) center / 2px 22px no-repeat;
 }
 @utility t-up-mark {
-  --_c: var(--mark, #464a50);
+  --_c: var(--mark, var(--c-mark));
   width: 22px;
   height: 22px;
   background:
@@ -66,7 +124,7 @@ html.english {
     linear-gradient(var(--_c), var(--_c)) center top / 2px 11px no-repeat;
 }
 @utility t-down-mark {
-  --_c: var(--mark, #464a50);
+  --_c: var(--mark, var(--c-mark));
   width: 22px;
   height: 22px;
   background:
@@ -129,6 +187,20 @@ body::-webkit-scrollbar,
   -ms-overflow-style: none;
 }
 
+/* Sidebar intro: hide the pieces until the GSAP timeline (hooks/useProfileIntro.ts) reveals them.
+   The delayed animation is a safety net in case the script never runs. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.intro-ready) [data-intro] {
+    visibility: hidden;
+    animation: intro-fallback 0s 4s forwards;
+  }
+}
+@keyframes intro-fallback {
+  to {
+    visibility: visible;
+  }
+}
+
 body.project-modal-open {
   overflow: hidden;
 }
@@ -140,9 +212,14 @@ body.project-modal-open {
     cursor: none !important;
   }
 }
-html.smooth-follower-enabled .project-modal,
-html.smooth-follower-enabled .project-modal * {
+/* Native <dialog>s render in the browser's top layer, above the custom cursor,
+   so they get the real system cursor back (and the follower hides while one is open). */
+html.smooth-follower-enabled dialog,
+html.smooth-follower-enabled dialog * {
   cursor: default !important;
+}
+html.smooth-follower-enabled dialog :is(a, button, [role="button"]) {
+  cursor: pointer !important;
 }
 html.smooth-follower-enabled .project-zoom-viewport {
   cursor: grab !important;

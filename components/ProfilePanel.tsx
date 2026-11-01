@@ -1,18 +1,22 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { usePortfolio } from "./PortfolioProvider";
 import { experience, links, projects } from "@/lib/content";
+import { useProfileIntro } from "@/hooks/useProfileIntro";
+import { ShareButton } from "./ShareButton";
 
 /** The pill that "hangs" from the header: card on desktop/tablet, black capsule on phones. */
 function Availability() {
   const { t, tab, profileCollapsed } = usePortfolio();
   return (
     <div
+      data-intro="pill"
       className={[
         "font-display text-white whitespace-nowrap flex items-center justify-center [direction:rtl] en:[direction:ltr]",
         // phones: fixed black capsule
-        "fixed right-8 top-[10px] z-51 h-8 min-w-[100px] gap-[6px] rounded-[18px] bg-[#050505] px-3 text-[11px] shadow-[0_4px_14px_#0003]",
+        "fixed right-8 top-[10px] z-51 h-8 min-w-[100px] gap-[6px] rounded-[18px] bg-[#050505] dark:ring-1 dark:ring-white/15 px-3 text-[11px] shadow-[0_4px_14px_#0003]",
         "max-[361px]:right-5 max-[361px]:min-w-24 max-[361px]:px-[9px] max-[361px]:text-[10px]",
         "max-tab:en:right-auto max-tab:en:left-8 max-[361px]:en:left-5 max-[361px]:en:text-[10px]",
         profileCollapsed ? "max-tab:hidden" : "",
@@ -38,16 +42,17 @@ function PortraitBox() {
   const { t, tab } = usePortfolio();
   return (
     <div
+      data-intro="portrait"
       className={[
         "pointer-events-none relative z-0 flex flex-none items-end justify-center overflow-hidden",
-        "before:pointer-events-none before:absolute before:inset-0 before:z-0 before:bg-[url(/assets/profile-cover.png)] before:bg-[length:100%_100%] before:bg-[position:center_top] before:bg-no-repeat before:content-['']",
+        "before:pointer-events-none before:absolute before:inset-0 before:z-0 before:bg-[url(/assets/profile-cover.png)] before:bg-[length:100%_100%] before:bg-[position:center_top] before:bg-no-repeat before:content-[''] dark:before:invert dark:before:opacity-80",
         // phones: rounded card with side margins
         "col-start-1 row-start-1 mx-8 mt-5 h-[190px] w-[calc(100%-64px)] rounded-t-[25px] border-0 bg-transparent max-[361px]:mx-5 max-[361px]:w-[calc(100%-40px)]",
         // tablet: left (or right in English) column
         "tab:col-start-1 tab:m-0 tab:h-auto tab:min-h-[318px] tab:w-auto tab:self-stretch tab:rounded-none tab:border-r tab:border-r-line tab:bg-surface",
         "en:tab:col-start-2 en:tab:border-r-0 en:tab:border-l en:tab:border-l-line",
         // desktop
-        "desk:min-h-0 desk:h-[var(--portrait-h)] desk:self-auto desk:border-b desk:border-b-[#a5a8b1] desk:border-r-0 en:desk:border-l-0",
+        "desk:min-h-0 desk:h-[var(--portrait-h)] desk:self-auto desk:border-b desk:border-b-[#a5a8b1] dark:desk:border-b-line desk:border-r-0 en:desk:border-l-0",
         tab !== "work" ? "max-desk:hidden" : "",
       ].join(" ")}
     >
@@ -57,6 +62,7 @@ function PortraitBox() {
         width={1000}
         height={1000}
         priority
+        data-intro="portrait-img"
         className="relative z-1 h-[82%] max-h-[82%] w-auto max-w-[88%] select-none object-contain object-bottom"
       />
     </div>
@@ -67,7 +73,8 @@ function Mark({ className }: { className: string }) {
   return (
     <span
       aria-hidden
-      className={`pointer-events-none absolute z-2 text-[#c5c8cf] border-current ${className}`}
+      data-intro="mark"
+      className={`pointer-events-none absolute z-2 text-[#c5c8cf] dark:text-[#3a3e46] border-current ${className}`}
     />
   );
 }
@@ -77,6 +84,7 @@ function ContactArea() {
   const work = tab === "work";
   return (
     <div
+      data-intro="contact"
       className={[
         "relative border border-line [direction:ltr]",
         // phones
@@ -112,8 +120,9 @@ function ContactArea() {
 
       <a
         href={`mailto:${links.email}`}
+        data-intro="email"
         className={[
-          "flex min-h-[42px] items-center justify-between border-b border-b-line bg-[#f5f6f9a3] px-[17px] font-arial en:font-google text-[12px] [direction:rtl]",
+          "flex min-h-[42px] items-center justify-between border-b border-b-line bg-[#f5f6f9a3] dark:bg-[#15171ba3] px-[17px] font-arial en:font-google text-[12px] [direction:rtl]",
           "en:[direction:ltr] en:flex-row-reverse",
           "tab:min-h-[52px] tab:border-b-0 tab:border-r tab:border-r-line tab:text-[14px]",
           "desk:min-h-[54px] desk:border-r-0 desk:border-b desk:text-[18px] wide:min-h-[41px] wide:text-[clamp(12px,.92vw,15px)]",
@@ -124,7 +133,7 @@ function ContactArea() {
           alt=""
           width={18}
           height={18}
-          className="opacity-70"
+          className="opacity-70 dark:invert"
         />
         <span>{links.email}</span>
       </a>
@@ -135,11 +144,11 @@ function ContactArea() {
       >
         <span
           aria-hidden
-          className="t-down-mark pointer-events-none absolute left-0 top-0 z-2 hidden -translate-x-1/2 -translate-y-1/2 [--mark:#c5c8cf] tab:max-desk:block"
+          className="t-down-mark pointer-events-none absolute left-0 top-0 z-2 hidden -translate-x-1/2 -translate-y-1/2 [--mark:#c5c8cf] dark:[--mark:#3a3e46] tab:max-desk:block"
         />
         <span
           aria-hidden
-          className="t-up-mark pointer-events-none absolute bottom-0 left-0 z-2 hidden -translate-x-1/2 translate-y-1/2 [--mark:#c5c8cf] tab:max-desk:block"
+          className="t-up-mark pointer-events-none absolute bottom-0 left-0 z-2 hidden -translate-x-1/2 translate-y-1/2 [--mark:#c5c8cf] dark:[--mark:#3a3e46] tab:max-desk:block"
         />
         {links.socials.map((social) => (
           <a
@@ -148,12 +157,13 @@ function ContactArea() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={social.name}
-            className="grid place-items-center border-r border-r-line last:border-r-0 hover:bg-[#e5e7ee]"
+            data-intro="social"
+            className="grid place-items-center border-r border-r-line last:border-r-0 hover:bg-[#e5e7ee] dark:hover:bg-hover"
           >
             <img
               src={social.icon}
               alt=""
-              className="size-[18px] opacity-[.74] tab:size-[22px] desk:size-[18px]"
+              className="size-[18px] opacity-[.74] tab:size-[22px] desk:size-[18px] dark:invert"
             />
           </a>
         ))}
@@ -165,9 +175,12 @@ function ContactArea() {
 export function ProfilePanel() {
   const { t, tab, summaryRef } = usePortfolio();
   const hideOutsideWork = tab !== "work" ? "max-desk:hidden" : "";
+  const asideRef = useRef<HTMLElement>(null);
+  useProfileIntro(asideRef);
 
   return (
     <aside
+      ref={asideRef}
       aria-label={t.profileAria}
       className="contents desk:relative desk:col-start-1 desk:flex desk:min-h-0 desk:flex-col desk:border-l desk:border-l-line desk:bg-surface"
     >
@@ -195,21 +208,21 @@ export function ProfilePanel() {
           />
 
           <div>
-            <h1 className="m-0 font-display text-[26px] font-bold leading-[1.3] tab:text-[27px] desk:text-[clamp(25px,2vw,36px)] wide:text-[clamp(22px,1.65vw,27px)]">
+            <h1 data-intro="name" className="m-0 font-display text-[26px] font-bold leading-[1.3] tab:text-[27px] desk:text-[clamp(25px,2vw,36px)] wide:text-[clamp(22px,1.65vw,27px)]">
               {t.name}
             </h1>
-            <p className="m-0 mt-[3px] pt-[5px] text-[15px] tab:pt-2 desk:text-[clamp(15px,1.18vw,20px)] wide:mt-0 wide:text-[clamp(13px,1vw,16px)]">
+            <p data-intro="role" className="m-0 mt-[3px] pt-[5px] text-[15px] tab:pt-2 desk:text-[clamp(15px,1.18vw,20px)] wide:mt-0 wide:text-[clamp(13px,1vw,16px)]">
               {t.role}
             </p>
           </div>
 
-          <p className="mb-5 mt-[22px] max-w-none text-[13px] leading-[1.55] tab:mb-[14px] tab:mt-[18px] tab:text-[14px] tab:leading-[1.5] desk:mt-[15px] desk:max-w-[430px] desk:text-[clamp(15px,1.12vw,19px)] desk:leading-[1.55] wide:text-[clamp(13px,.98vw,16px)] wide:leading-[1.48]">
+          <p data-intro="lede" className="mb-5 mt-[22px] max-w-none text-[13px] leading-[1.55] tab:mb-[14px] tab:mt-[18px] tab:text-[14px] tab:leading-[1.5] desk:mt-[15px] desk:max-w-[430px] desk:text-[clamp(15px,1.12vw,19px)] desk:leading-[1.55] wide:text-[clamp(13px,.98vw,16px)] wide:leading-[1.48]">
             {t.lede}
           </p>
 
           <div
             aria-label={t.statsAria}
-            className="grid grid-cols-3 gap-[5px] border-t border-t-white pb-[14px] pt-4 font-display [direction:rtl] en:[direction:ltr] tab:pb-[10px] tab:pt-3 desk:pb-[14px] desk:pt-[13px]"
+            className="grid grid-cols-3 gap-[5px] border-t border-t-white dark:border-t-line pb-[14px] pt-4 font-display [direction:rtl] en:[direction:ltr] tab:pb-[10px] tab:pt-3 desk:pb-[14px] desk:pt-[13px]"
           >
             {[
               { value: t.stats.yearsValue, label: t.stats.years, order: "" },
@@ -226,9 +239,10 @@ export function ProfilePanel() {
             ].map((stat) => (
               <div
                 key={stat.label}
+                data-intro="stat"
                 className={`flex flex-col items-center gap-px whitespace-nowrap text-center tab:items-start tab:text-right en:tab:text-left ${stat.order}`}
               >
-                <strong className="font-stat text-[25px] font-bold leading-[1.1] text-[#b6b8bf] tab:text-[26px] desk:text-[clamp(25px,1.8vw,30px)]">
+                <strong data-count className="font-stat text-[25px] font-bold leading-[1.1] text-[#b6b8bf] dark:text-[#6b707b] tab:text-[26px] desk:text-[clamp(25px,1.8vw,30px)]">
                   {stat.value}
                 </strong>
                 <span className="text-[12px] desk:text-[clamp(12px,.9vw,15px)]">
@@ -243,13 +257,15 @@ export function ProfilePanel() {
               href={links.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${actionBase} border-[#171717] bg-[linear-gradient(#373737,#171717)] text-white shadow-[inset_0_1px_0_#fff7,0_2px_2px_#0003]`}
+              data-intro="action"
+              className={`${actionBase} border-[#171717] bg-[linear-gradient(#373737,#171717)] text-white shadow-[inset_0_1px_0_#fff7,0_2px_2px_#0003] dark:border-[#e2ff6a] dark:bg-[linear-gradient(#e2ff6a,#c6ef1f)] dark:text-[#171717] dark:shadow-[inset_0_1px_0_#fff9,0_4px_14px_#d6ff3526]`}
             >
               {t.message}
             </a>
             <a
               href={links.cv}
-              className={`${actionBase} border-[#d1d1d6] bg-[linear-gradient(#fff,#f5f5f8)] text-[#222] shadow-[0_2px_1px_#0002]`}
+              data-intro="action"
+              className={`${actionBase} border-[#d1d1d6] bg-[linear-gradient(#fff,#f5f5f8)] text-[#222] shadow-[0_2px_1px_#0002] dark:border-[#34373e] dark:bg-[linear-gradient(#25282e,#1b1d22)] dark:text-[#e6e7ea] dark:shadow-[0_2px_1px_#0006]`}
             >
               {t.cv}
               <img
@@ -258,9 +274,10 @@ export function ProfilePanel() {
                 height={16}
                 alt=""
                 aria-hidden
-                className="max-w-none"
+                className="max-w-none dark:invert"
               />
             </a>
+            <ShareButton intro="action" className="min-h-[42px] w-[42px] flex-none desk:min-h-[54px] desk:w-[54px] wide:min-h-[44px] wide:w-[44px]" />
           </div>
         </div>
 

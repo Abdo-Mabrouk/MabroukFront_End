@@ -1,7 +1,10 @@
 "use client";
 
 import { usePortfolio } from "./PortfolioProvider";
+import { useRef } from "react";
 import { RichText } from "./RichText";
+import { FlyChars, FlyWords } from "./FlyText";
+import { useAboutFlyIn } from "@/hooks/useAboutFlyIn";
 import { aboutSections, experience, skills, software } from "@/lib/content";
 
 const panelShell = "bg-dots-info h-auto desk:h-full";
@@ -10,7 +13,7 @@ const innerShell =
   "mx-auto w-[calc(100%-56px)] pb-[100px] pt-[45px] text-right max-[361px]:w-[calc(100%-48px)] en:text-left tab:w-[min(900px,calc(100%-72px))] tab:pb-[35px] desk:pb-[100px]";
 const heading = "font-display font-bold leading-[1.2] text-[clamp(22px,1.8vw,27px)] mt-0";
 const skillChip =
-  "rounded-[5px] border border-[#cdd0d7] bg-white font-arial [direction:ltr]";
+  "rounded-[5px] border border-[#cdd0d7] bg-white dark:border-[#2f3239] dark:bg-card font-arial [direction:ltr]";
 
 export function ExperiencePanel() {
   const { lang, isEnglish, t, tab } = usePortfolio();
@@ -21,12 +24,12 @@ export function ExperiencePanel() {
         <div dir={isEnglish ? "ltr" : "rtl"} className={innerShell}>
           <h2 className={`${heading} mb-4`}>{t.experienceTitle}</h2>
 
-          <div className="border-t border-t-[#cfd3dc]">
+          <div className="border-t border-t-[#cfd3dc] dark:border-t-line">
             {experience.map((item) => (
               <article
                 key={item.id}
                 className={[
-                  "grid items-start border-b border-b-[#cfd3dc] py-5 text-right en:text-left",
+                  "grid items-start border-b border-b-[#cfd3dc] dark:border-b-line py-5 text-right en:text-left",
                   "grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-x-3 gap-y-0",
                   "tab:grid-cols-1 tab:gap-[10px]",
                   "tabw:grid-cols-[150px_minmax(0,1fr)] tabw:gap-6",
@@ -52,10 +55,10 @@ export function ExperiencePanel() {
                   <h3 className="col-start-1 row-start-1 mb-[3px] font-display text-[16px] font-bold max-tab:en:col-start-2 tab:col-auto tab:row-auto text-right en:text-left en:[direction:ltr]">
                     <bdi>{item.role}</bdi>
                   </h3>
-                  <p className="col-start-1 row-start-2 mb-[9px] mt-0 text-[12px] leading-[1.8] text-[#737984] max-tab:en:col-start-2 tab:col-auto tab:row-auto text-right en:text-left en:[direction:ltr]">
+                  <p className="col-start-1 row-start-2 mb-[9px] mt-0 text-[12px] leading-[1.8] text-subtle max-tab:en:col-start-2 tab:col-auto tab:row-auto text-right en:text-left en:[direction:ltr]">
                     <bdi>{item.company}</bdi>
                   </p>
-                  <ul className="col-span-full row-start-3 m-0 mt-[9px] list-disc ps-[1.25em] text-[12px] leading-[1.6] text-[#4f5560] text-right en:text-left tab:col-auto tab:row-auto tab:mt-0">
+                  <ul className="col-span-full row-start-3 m-0 mt-[9px] list-disc ps-[1.25em] text-[12px] leading-[1.6] text-soft text-right en:text-left tab:col-auto tab:row-auto tab:mt-0">
                     {item.points[lang].map((point, i) => (
                       <li key={i} className="mb-[6px]">
                         <RichText text={point} />
@@ -82,7 +85,7 @@ export function ExperiencePanel() {
               <span
                 key={tool.name}
                 title={tool.name}
-                className={`${skillChip} grid size-[58px] origin-center place-items-center rounded-[10px] p-[9px] transition-[translate,rotate,box-shadow] duration-[240ms] ease-[ease] hover:-translate-y-1 hover:-rotate-5 hover:shadow-[0_8px_18px_#20242a1a] even:hover:rotate-5`}
+                className={`${skillChip} grid size-[58px] origin-center place-items-center rounded-[10px] p-[9px] transition-[translate,rotate,box-shadow] duration-[240ms] ease-[ease] hover:-translate-y-1 hover:-rotate-5 hover:shadow-[0_8px_18px_#20242a1a] dark:hover:shadow-[0_8px_18px_#0009] even:hover:rotate-5`}
               >
                 <img src={tool.icon} alt={tool.name} className="block size-9 object-contain" />
               </span>
@@ -96,25 +99,59 @@ export function ExperiencePanel() {
 
 export function AboutPanel() {
   const { lang, isEnglish, t, tab } = usePortfolio();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isActive = tab === "about";
+  useAboutFlyIn(scrollRef, isActive, lang);
+
+  // Two sections per screen so every screen has room to scroll through.
+  const screens: (typeof aboutSections)[] = [];
+  for (let i = 0; i < aboutSections.length; i += 2) screens.push(aboutSections.slice(i, i + 2));
 
   return (
-    <div id="aboutPanel" role="tabpanel" hidden={tab !== "about"} className={panelShell}>
-      <div className={scrollShell}>
-        <article dir={isEnglish ? "ltr" : "rtl"} className={innerShell}>
-          <h2 className={`${heading} mb-3`}>{t.aboutTitle}</h2>
-          <p className="mb-[22px] mt-0 max-w-none text-[14px] leading-[1.6]">{t.aboutIntro}</p>
-          {aboutSections.map((section) => (
-            <section key={section.id} className="border-t border-t-[#cfd3dc] py-[18px] text-right en:text-left en:[direction:ltr]">
-              <h3 className="mb-[7px] mt-0 text-[16px] font-bold leading-[1.4]">
-                <RichText text={section.title[lang]} />
-              </h3>
-              <p className="m-0 max-w-[760px] text-[12px] leading-[1.7] text-[#4f5560]">
-                <RichText text={section.body[lang]} />
-              </p>
-            </section>
+    <div id="aboutPanel" role="tabpanel" hidden={!isActive} className={panelShell}>
+      <div ref={scrollRef} className={scrollShell}>
+        <article dir={isEnglish ? "ltr" : "rtl"} className="mx-auto w-[calc(100%-56px)] pb-[130px] text-right max-[361px]:w-[calc(100%-48px)] en:text-left tab:w-[min(900px,calc(100%-72px))] tab:pb-16 desk:pb-20">
+          {/* Screen 1: title + intro */}
+          <div data-about-hero className={`${heroShell} relative`}>
+            <h2 className="m-0 font-display text-[clamp(44px,9vw,96px)] font-bold leading-[1.15]">
+              <FlyChars text={t.aboutTitle} />
+            </h2>
+            <p className="m-0 mt-5 max-w-[620px] text-[clamp(17px,2vw,24px)] leading-[1.6] text-soft">
+              <FlyWords text={t.aboutIntro} />
+            </p>
+            <div data-scroll-hint aria-hidden className="absolute inset-x-0 bottom-[110px] flex flex-col items-center gap-2 text-[12px] text-subtle desk:bottom-10">
+              <span>{isEnglish ? "Scroll" : "اسحب لأسفل"}</span>
+              <span className="relative h-9 w-[22px] rounded-full border-2 border-current">
+                <span className="absolute left-1/2 top-[6px] size-1.5 -translate-x-1/2 animate-bounce rounded-full bg-current" />
+              </span>
+            </div>
+          </div>
+
+          {screens.map((group, index) => (
+            <div key={group[0].id} className="flex flex-col gap-[clamp(36px,6vh,56px)] py-[clamp(28px,6vh,56px)]">
+              {group.map((section, i) => (
+                <section key={section.id} data-about-section className="relative pt-6 text-right en:text-left en:[direction:ltr]">
+                  <span data-about-line aria-hidden className="absolute inset-x-0 top-0 h-px bg-[#cfd3dc] dark:bg-line" />
+                  <span className="mb-3 block font-stat text-[13px] text-subtle">
+                    {String(index * 2 + i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="m-0 mb-4 font-display text-[clamp(28px,4vw,46px)] font-bold leading-[1.25]">
+                    <FlyChars text={section.title[lang].replace(/\*\*|\{\{|\}\}/g, "")} />
+                  </h3>
+                  <p className="m-0 max-w-[760px] text-[clamp(14px,1.25vw,17px)] leading-[1.85] text-soft">
+                    <FlyWords text={section.body[lang]} />
+                  </p>
+                </section>
+              ))}
+            </div>
           ))}
         </article>
       </div>
     </div>
   );
 }
+
+// Only the opening title gets a full screen; the sections follow at a normal reading rhythm.
+const heroShell =
+  "flex flex-col justify-center py-[60px] min-h-[calc(100svh-52px)] " +
+  "desk:min-h-[max(calc(100vh-var(--header-h)),670px)]";

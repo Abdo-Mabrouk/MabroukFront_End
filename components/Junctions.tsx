@@ -4,7 +4,7 @@
  * Phones: not rendered (display none).
  */
 const base =
-  "pointer-events-none absolute hidden h-0 w-0 text-[#464a50] " +
+  "pointer-events-none absolute hidden h-0 w-0 text-[#464a50] dark:text-[#6b707b] " +
   "tab:fixed tab:z-31 desk:absolute desk:z-20 " +
   "before:absolute before:left-0 before:top-0 before:bg-current before:content-[''] " +
   "after:absolute after:top-0 after:bg-current after:content-['']";

@@ -1,7 +1,9 @@
 import { useEffect, useRef, type RefObject } from "react";
 
-const MIN_ZOOM = 0.5;
-const MAX_ZOOM = 5;
+export const MIN_ZOOM = 0.5;
+export const MAX_ZOOM = 5;
+
+export type ZoomListener = (zoom: number) => void;
 
 interface Point {
   x: number;
@@ -11,7 +13,8 @@ interface Point {
 /**
  * Wheel / drag / pinch zoom for the full-screen project viewer.
  * Works directly on the DOM (transform written to the <img>) so dragging never re-renders React.
- * Returns `reset`, which restores the initial view (also bound to double-click and window resize).
+ * Returns `reset` (also bound to double-click and window resize), `zoomTo` (zoom around the centre)
+ * and `subscribe`, which notifies listeners whenever the zoom level changes.
  */
 export function useZoomPan(
   viewportRef: RefObject<HTMLDivElement | null>,
@@ -27,7 +30,22 @@ export function useZoomPan(
     pointers: new Map<number, Point>(),
   });
 
-  const apiRef = useRef({ reset: () => {}, clearPointers: () => {} });
+  const listeners = useRef(new Set<ZoomListener>());
+
+  const apiRef = useRef({
+    reset: () => {},
+    clearPointers: () => {},
+    zoomTo: (value: number) => {
+      void value;
+    },
+    subscribe: (listener: ZoomListener) => {
+      listeners.current.add(listener);
+      listener(state.current.zoom);
+      return () => {
+        listeners.current.delete(listener);
+      };
+    },
+  });
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -37,6 +55,7 @@ export function useZoomPan(
 
     const render = () => {
       image.style.transform = `translate3d(${s.panX}px, ${s.panY}px, 0) scale(${s.zoom})`;
+      listeners.current.forEach((listener) => listener(s.zoom));
     };
 
     const reset = () => {
@@ -122,7 +141,9 @@ export function useZoomPan(
     window.addEventListener("resize", onResize);
 
     apiRef.current = {
+      ...apiRef.current,
       reset,
+      zoomTo: (value: number) => setZoom(value),
       clearPointers: () => {
         s.pointers.clear();
         viewport.classList.remove("is-dragging");

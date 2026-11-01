@@ -86,7 +86,7 @@ export function SmoothFollower() {
     <div
       ref={followerRef}
       aria-hidden
-      className="group/follower pointer-events-none fixed inset-0 z-1000 text-ink opacity-0 transition-opacity duration-150 [&.is-visible]:opacity-100 [@media(pointer:coarse)]:hidden [@media(prefers-reduced-motion:reduce)]:hidden"
+      className="group/follower pointer-events-none fixed inset-0 z-1000 [html:has(dialog[open])_&]:hidden text-ink opacity-0 transition-opacity duration-150 [&.is-visible]:opacity-100 [@media(pointer:coarse)]:hidden [@media(prefers-reduced-motion:reduce)]:hidden"
     >
       <span ref={dotRef} className="absolute left-0 top-0 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-current will-change-[left,top]" />
       <span

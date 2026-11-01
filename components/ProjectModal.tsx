@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { usePortfolio } from "./PortfolioProvider";
 import { useZoomPan } from "@/hooks/useZoomPan";
 import { projects } from "@/lib/content";
+import { ZoomRuler } from "./ZoomRuler";
 
 export function ProjectModal() {
   const { lang, isEnglish, t, activeProject, closeProject } = usePortfolio();
@@ -98,6 +99,10 @@ export function ProjectModal() {
           height={900}
           className="pointer-events-none block h-full w-full max-h-none max-w-none origin-center select-none object-contain will-change-transform [-webkit-user-drag:none]"
         />
+      </div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-3 flex justify-center px-4 pb-[max(18px,env(safe-area-inset-bottom))] tab:pb-[clamp(20px,3vw,36px)]">
+        <ZoomRuler zoomApi={zoom} label={isEnglish ? "Zoom" : "تكبير"} />
       </div>
     </dialog>
   );

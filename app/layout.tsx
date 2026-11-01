@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { STORAGE_KEY } from "@/lib/content";
+import { STORAGE_KEY, THEME_STORAGE_KEY } from "@/lib/content";
+import { OG_CARD, SITE_URL } from "@/lib/site";
 
 const ping = localFont({
   src: [
@@ -30,13 +31,13 @@ const googleSans = localFont({
   preload: false,
 });
 
-const SITE_URL = "https://mabroukfrontend.mabroukui.com/";
-const DESCRIPTION ="متخصص في تطوير واجهات الويب الحديثة والتطبيقات الرقمية باستخدام React.js وNext.js. أركز على بناء واجهات تفاعلية وسريعة وقابلة للتوسع، وتطوير تجارب مستخدم متكاملة، وربط الواجهات بالـ APIs، مع الاهتمام بتنظيم الكود، وتحسين الأداء، وتحقيق التوازن بين احتياجات المستخدم ومتطلبات المشروع."
-const SOCIAL_TITLE = "عبدالرحمن مبروك - مصمم واجهة اماميه";
+const DESCRIPTION =
+  "مطوّر واجهات أمامية متخصص في React.js وNext.js. أبني واجهات ويب سريعة ومتجاوبة وقابلة للتوسع، وأربطها بالـ APIs، مع اهتمام حقيقي بالأداء وجودة الكود وتجربة المستخدم.";
+const SOCIAL_TITLE = "عبدالرحمن مبروك - مطوّر واجهات أمامية";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Abdelrhman Mabrouk Front_End",
+  title: "Abdelrhman Mabrouk — Front-End Developer",
   description: DESCRIPTION,
   applicationName: "MabroukFront_End",
   alternates: { canonical: "/" },
@@ -47,22 +48,14 @@ export const metadata: Metadata = {
     locale: "ar_EG",
     title: SOCIAL_TITLE,
     description: DESCRIPTION,
-    url: SITE_URL + "/",
-    images: [
-      {
-        url: "/assets/portrait-static.png",
-        type: "image/jpeg",
-        width: 1200,
-        height: 630,
-        alt: "كافر معرض أعمال عبدالرحمن مبروك",
-      },
-    ],
+    url: SITE_URL,
+    images: [OG_CARD],
   },
   twitter: {
     card: "summary_large_image",
     title: SOCIAL_TITLE,
     description: DESCRIPTION,
-    images: ["/assets/portrait-static.png"],
+    images: [OG_CARD],
   },
 };
 
@@ -76,6 +69,12 @@ const languageBootScript = `try{if(localStorage.getItem(${JSON.stringify(
   STORAGE_KEY,
 )})==='en'){var d=document.documentElement;d.lang='en';d.dir='ltr';d.classList.add('english')}}catch(e){}`;
 
+// Applies the saved theme before first paint so dark-mode visitors never see a white flash.
+// With nothing saved yet, it follows the operating system's preference.
+const themeBootScript = `try{var t=localStorage.getItem(${JSON.stringify(
+  THEME_STORAGE_KEY,
+)});if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -86,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: languageBootScript }} />
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
       <body>{children}</body>
     </html>

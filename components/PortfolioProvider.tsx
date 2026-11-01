@@ -8,16 +8,29 @@ import {
   useMemo,
   useRef,
   useState,
+  type MouseEvent,
   type ReactNode,
   type RefObject,
 } from "react";
-import { STORAGE_KEY, ui, type Lang, type TabId, type UiStrings } from "@/lib/content";
+import { flushSync } from "react-dom";
+import {
+  STORAGE_KEY,
+  THEME_STORAGE_KEY,
+  ui,
+  type Lang,
+  type TabId,
+  type Theme,
+  type UiStrings,
+} from "@/lib/content";
 
 interface PortfolioContextValue {
   lang: Lang;
   isEnglish: boolean;
   t: UiStrings;
   toggleLanguage: () => void;
+  theme: Theme;
+  /** Pass the click event to make the new theme spread out from the button. */
+  toggleTheme: (event?: MouseEvent<HTMLElement>) => void;
   tab: TabId;
   setTab: (tab: TabId) => void;
   /** True on phones once the profile card has scrolled away (shows the compact header profile). */
@@ -41,6 +54,7 @@ const HEADER_HEIGHT = 52;
 
 export function PortfolioProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>("ar");
+  const [theme, setTheme] = useState<Theme>("light");
   const [tab, setTabState] = useState<TabId>("work");
   const [profileCollapsed, setProfileCollapsed] = useState(false);
   const [activeProject, setActiveProject] = useState<number | null>(null);
@@ -72,6 +86,52 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
         /* ignore */
       }
       return next;
+    });
+  }, []);
+
+  // The boot script in layout.tsx already set the class on <html>; just read it back.
+  useEffect(() => {
+    setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+  }, []);
+
+  const toggleTheme = useCallback((event?: MouseEvent<HTMLElement>) => {
+    const root = document.documentElement;
+    const next: Theme = root.classList.contains("dark") ? "light" : "dark";
+
+    const apply = () => {
+      root.classList.toggle("dark", next === "dark");
+      flushSync(() => setTheme(next));
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, next);
+      } catch {
+        /* ignore */
+      }
+    };
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      apply();
+      return;
+    }
+
+    if (!document.startViewTransition) {
+      root.classList.add("theme-switching");
+      apply();
+      window.setTimeout(() => root.classList.remove("theme-switching"), 400);
+      return;
+    }
+
+    // Circle grows from the button (or the screen centre) to cover the whole page.
+    const rect = event?.currentTarget.getBoundingClientRect();
+    const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+    const y = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
+    const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+
+    document.startViewTransition(apply).ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: "cubic-bezier(0.65, 0, 0.35, 1)", pseudoElement: "::view-transition-new(root)" },
+      );
     });
   }, []);
 
@@ -109,6 +169,8 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
       isEnglish: lang === "en",
       t: ui[lang],
       toggleLanguage,
+      theme,
+      toggleTheme,
       tab,
       setTab,
       profileCollapsed,
@@ -117,7 +179,7 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
       openProject,
       closeProject,
     }),
-    [lang, toggleLanguage, tab, setTab, profileCollapsed, activeProject, openProject, closeProject],
+    [lang, toggleLanguage, theme, toggleTheme, tab, setTab, profileCollapsed, activeProject, openProject, closeProject],
   );
 
   return <PortfolioContext.Provider value={value}>{children}</PortfolioContext.Provider>;

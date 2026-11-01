@@ -26,22 +26,19 @@ export interface AboutSection {
 }
 
 export const STORAGE_KEY = "mabroukui-language";
+export const THEME_STORAGE_KEY = "mabroukui-theme";
+export type Theme = "light" | "dark";
 
 export const projects: Project[] = [
   {
     file: "projects-1.jpeg",
-    title: { ar: " رورا باث | ويب سايت", en: "Rora Bath |  Website" },
+    title: { ar: "رورا باث | الموقع الإلكتروني", en: "Rora Bath | Website" },
     url: "https://rorabath.com/",
   },
   {
     file: "projects-2.jpeg",
-    title: { ar: " رورا باث | لوحه التحكم", en: "Rora Bath | Dashboard" },
+    title: { ar: "رورا باث | لوحة التحكم", en: "Rora Bath | Dashboard" },
     url: "https://admin.rorabath.com/",
-  },
-  {
-    file: "projects-3.jpg",
-    title: { ar: " رورا باث | لوحه التحكم", en: "Rora Bath | Dashboard" },
-    url: "https://admin-jothour-hloul.doctor-code.net/",
   },
   {
     file: "projects-4.jpeg",
@@ -132,40 +129,40 @@ export const aboutSections: AboutSection[] = [
     id: "who",
     title: { ar: "من أنا؟", en: "Who Am I?" },
     body: {
-      ar: "أنا عبدو مبروك، مطور واجهات أمامية {{Front-End Developer}} متخصص في {{React.js}} و{{Next.js}}. أركز على بناء واجهات ويب تفاعلية، سريعة ومتجاوبة، مع الاهتمام بتجربة المستخدم وجودة الكود وقابلية التطوير والصيانة.",
-      en: "I’m Abdo Mabrouk, a Front-End Developer specializing in React.js and Next.js. I focus on building interactive, fast, and responsive web interfaces while prioritizing user experience, code quality, scalability, and maintainability.",
+      ar: "أنا عبدالرحمن مبروك، مطوّر واجهات أمامية {{Front-End Developer}} متخصص في {{React.js}} و{{Next.js}}. أبني واجهات ويب تفاعلية وسريعة ومتجاوبة، وأضع تجربة المستخدم وجودة الكود وسهولة الصيانة في مقدمة أولوياتي.",
+      en: "I’m Abdelrhman Mabrouk, a Front-End Developer specializing in React.js and Next.js. I build interactive, fast, and responsive web interfaces, with user experience, code quality, and maintainability at the core of everything I ship.",
     },
   },
   {
     id: "experience",
     title: { ar: "خبرتي", en: "My Experience" },
     body: {
-      ar: "أعمل في {{Dr. Code Software Company}} منذ مايو 2025، وأساهم في تطوير واجهات ويب لمشاريع متنوعة، تشمل **منصات التجارة الإلكترونية، لوحات التحكم، وأنظمة إدارة البيانات**، باستخدام تقنيات حديثة مثل React.js وNext.js وTypeScript.",
-      en: "I’ve been working at Dr. Code Software Company since May 2025, contributing to web interfaces for various projects, including **e-commerce platforms, dashboards, and data management systems**, using modern technologies such as React.js, Next.js, and TypeScript.",
+      ar: "أعمل منذ مايو 2025 في {{Dr. Code Software Company}}، حيث أطوّر واجهات ويب لمشاريع متنوعة تشمل **منصات التجارة الإلكترونية، ولوحات التحكم، وأنظمة إدارة البيانات**، باستخدام React.js وNext.js وTypeScript.",
+      en: "Since May 2025, I’ve been at Dr. Code Software Company, building web interfaces for a range of products, including **e-commerce platforms, admin dashboards, and data management systems**, with React.js, Next.js, and TypeScript.",
     },
   },
   {
     id: "process",
     title: { ar: "طريقة عملي", en: "How I Work" },
     body: {
-      ar: "أبدأ بفهم متطلبات المشروع واحتياجات المستخدم، ثم أحول التصميمات إلى واجهات عملية ومتجاوبة. أهتم بكتابة كود منظم، وبناء مكونات قابلة لإعادة الاستخدام، وربط الواجهات بالـ APIs، مع تحقيق التوازن بين **تجربة المستخدم، أداء التطبيق، وجودة التنفيذ**.",
-      en: "I start by understanding project requirements and user needs, then turn designs into functional and responsive interfaces. I focus on writing clean code, building reusable components, and integrating APIs while balancing **user experience, application performance, and implementation quality**.",
+      ar: "أبدأ بفهم متطلبات المشروع واحتياجات المستخدم، ثم أحوّل التصميمات إلى واجهات عملية ومتجاوبة. أكتب كودًا منظمًا، وأبني مكونات قابلة لإعادة الاستخدام، وأربط الواجهات بالـ APIs، مع الحفاظ على التوازن بين **تجربة المستخدم، وأداء التطبيق، وجودة التنفيذ**.",
+      en: "I start by understanding the project requirements and the people who will use it, then turn designs into functional, responsive interfaces. I write clean code, build reusable components, and integrate APIs while balancing **user experience, application performance, and implementation quality**.",
     },
   },
   {
     id: "architecture",
-    title: { ar: "بناء الواجهات", en: "Frontend Architecture" },
+    title: { ar: "هندسة الواجهات", en: "Front-End Architecture" },
     body: {
-      ar: "أهتم ببناء واجهات منظمة وقابلة للتوسع باستخدام **{{React}} و{{Next.js}}**، مع تقسيم الواجهات إلى مكونات مستقلة، وإدارة الحالة باستخدام الأدوات المناسبة، وتحسين التعامل مع البيانات لضمان سهولة الصيانة والتطوير مستقبلًا.",
-      en: "I focus on building structured and scalable interfaces using **React and Next.js**, breaking UIs into independent components, managing state with suitable tools, and optimizing data handling to support long-term maintainability and growth.",
+      ar: "أصمّم واجهات منظمة وقابلة للتوسع باستخدام **{{React}} و{{Next.js}}**؛ أقسّمها إلى مكونات مستقلة، وأدير الحالة بالأدوات الأنسب لكل مشروع، وأُحسّن التعامل مع البيانات بما يضمن سهولة الصيانة والتطوير مستقبلًا.",
+      en: "I design structured, scalable interfaces with **React and Next.js**: breaking UIs into independent components, choosing the right state management for each project, and optimizing data flow to support long-term maintainability and growth.",
     },
   },
   {
     id: "technology",
     title: { ar: "شغفي بالتكنولوجيا", en: "My Passion for Technology" },
     body: {
-      ar: "أحرص على تطوير مهاراتي باستمرار ومتابعة التقنيات والأدوات الحديثة في تطوير الويب. أهتم باستكشاف الحلول التي تساعد على بناء تطبيقات أسرع وأكثر كفاءة، وتقديم تجارب رقمية تلبي احتياجات المستخدمين وأهداف المشاريع.",
-      en: "I’m committed to continuously improving my skills and exploring modern web development technologies and tools. I enjoy discovering solutions that help build faster, more efficient applications and deliver digital experiences that meet user needs and project goals.",
+      ar: "أطوّر مهاراتي باستمرار، وأتابع أحدث تقنيات وأدوات تطوير الويب. أستمتع باستكشاف الحلول التي تجعل التطبيقات أسرع وأكثر كفاءة، وتقدّم تجارب رقمية تلبي احتياجات المستخدمين وتحقق أهداف المشاريع.",
+      en: "I keep sharpening my skills and stay current with modern web technologies and tools. I enjoy finding solutions that make applications faster and more efficient, and that deliver digital experiences meeting both user needs and business goals.",
     },
   },
   {
@@ -187,7 +184,7 @@ export const links = {
     // { name: "Behance", href: "https://www.behance.net/a7medmabrok0", icon: "/assets/icons/behance.svg" },
     {
       name: "LinkedIn",
-      href: "www.linkedin.com/in/abdelrhman-mabrouk-777b96343",
+      href: "https://www.linkedin.com/in/abdelrhman-mabrouk-777b96343",
       icon: "/assets/icons/linkedin.svg",
     },
     {
@@ -254,8 +251,8 @@ export const ui: Localized<UiStrings> = {
     tabs: { about: "عنــي", experience: "الخبرات", work: "معرض الأعمال" },
     available: "متاح للعمل",
     name: "عبدالرحمن مبروك",
-    role: "مصمم واجهة اماميه",
-    lede: "متخصص في تطوير واجهات الويب والتطبيقات الرقمية باستخدام React.js وNext.js. أركز على بناء واجهات تفاعلية وقابلة للتوسع، وتطوير تجارب مستخدم سلسة ومتجاوبة، وربط الأنظمة بالـ APIs، مع الاهتمام بالأداء وجودة الكود وتحقيق التوازن بين احتياجات المستخدم وأهداف المشروع وقابلية التنفيذ.",
+    role: "مطوّر واجهات أمامية",
+    lede: "مطوّر واجهات أمامية متخصص في React.js وNext.js. أبني واجهات ويب سريعة ومتجاوبة وقابلة للتوسع، وأربطها بالـ APIs، مع اهتمام حقيقي بالأداء وجودة الكود وتجربة المستخدم.",
     stats: {
       years: "سنوات خبرة",
       yearsValue: "+1.5",
@@ -289,12 +286,12 @@ export const ui: Localized<UiStrings> = {
     available: "Available for work",
     name: "Abdelrhman Mabrouk",
     role: "Front-End Developer",
-    lede: "Specialized in developing modern web interfaces and digital applications using React.js and Next.js. I focus on building interactive, scalable interfaces, creating seamless and responsive user experiences, integrating systems with APIs, and maintaining high performance and code quality while balancing user needs, project goals, and technical feasibility.",
+    lede: "Front-End Developer specializing in React.js and Next.js. I build fast, responsive, and scalable web interfaces, connect them to APIs, and care deeply about performance, code quality, and user experience.",
     stats: {
-      years: "Experience",
+      years: "Years Experience",
       yearsValue: "+1.5y",
       projects: "Projects",
-      sectors: "Industry",
+      sectors: "Sector",
     },
     message: "Send Message",
     cv: "Download CV",
@@ -305,7 +302,7 @@ export const ui: Localized<UiStrings> = {
     mobileNavAria: "Mobile navigation",
     profileAria: "Profile",
     mainPanelAria: "Site content",
-    portraitAlt: "Portrait of Ahmed Mabrouk",
+    portraitAlt: "Portrait of Abdelrhman Mabrouk",
     statsAria: "Work statistics",
     workScrollAria: "Portfolio projects; scroll to browse",
     socialsAria: "Social links",
